@@ -87,6 +87,31 @@ public class DialogContent extends _Parent {
     @FindBy(css = "div[class=tZshNe]")
     private WebElement googlePlusLogosu;
 
+    @FindBy(xpath = "(//a[@title='Dresses'])[2]")
+    private WebElement dresses;
+        //(//ul[@class='product_list grid row']/li)[2]
+   // @FindBy(xpath = "(//span[text()='Add to cart'])[2]")
+  // @FindBy(css="ul[class='product_list grid row']>li")
+        @FindBy(xpath = "(//a[@class='product-name'])[4]")
+    private WebElement printedDressAddToCart;
+
+   // @FindBy(xpath = "//i[@class='icon-ok']")
+    @FindBy(xpath = "//span[@class='ajax_cart_product_txt ']")
+    private WebElement successProductAdd;
+
+    @FindBy(xpath = "//span[text()='Add to cart']")
+    private WebElement addToCart;
+
+    @FindBy(xpath = "//a[@title='Proceed to checkout']")
+    private WebElement proceedToCheckout;
+
+    @FindBy(xpath = "//i[@class='icon-trash']")
+    private WebElement deleteIcon;
+
+    @FindBy(xpath = "//p[@class='alert alert-warning']")//bunun textinin empty oldugunu dogrulayacagiz
+    private WebElement cart;
+
+
 
     @FindAll({
             @FindBy(css = "td[class=bold]>[for]")
@@ -115,9 +140,9 @@ public class DialogContent extends _Parent {
     private List<WebElement> denemeList;
 
     @FindAll({
-            @FindBy(css="div[class=right-block]")
+            @FindBy(css="ul[class='product_list grid row']>li")
     })
-    private List<WebElement> deneme1List;
+    private List<WebElement> productList;
 
     @FindAll({
             @FindBy(css = "div[class='product-container']>div+div>div>span+span")
@@ -169,6 +194,21 @@ public class DialogContent extends _Parent {
                 break;
             case "googlePlus":
                 myElement = googlePlus;
+                break;
+            case "dresses":
+                myElement = dresses;
+                break;
+            case "proceedToCheckout":
+                myElement = proceedToCheckout;
+                break;
+            case "printedDressAddToCart":
+                myElement = printedDressAddToCart;
+                break;
+            case "deleteIcon":
+                myElement = deleteIcon;
+                break;
+            case "addToCart":
+                myElement = addToCart;
                 break;
 
 
@@ -230,6 +270,12 @@ public class DialogContent extends _Parent {
             case "successMessage":
                 myElement = successMessage;
                 break;
+            case "successProductAdd":
+                myElement = successProductAdd;
+                break;
+            case "cart":
+                myElement = cart;
+                break;
         }
         verifyElementContainsText(myElement, msg);
     }
@@ -246,6 +292,7 @@ public class DialogContent extends _Parent {
             case "pruduct":
                 myElement = pruduct;
                 break;
+
 
         }
         selectMenu(myElement, index);
@@ -279,7 +326,7 @@ public class DialogContent extends _Parent {
                 myElementList = denemeList;
                 break;
             case "deneme1List":
-                myElementList = deneme1List;
+               // myElementList = deneme1List;
                 break;
         }
         if (numberOfItems > 0)

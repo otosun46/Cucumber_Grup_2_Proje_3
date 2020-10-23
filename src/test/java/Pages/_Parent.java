@@ -40,7 +40,7 @@ public class _Parent {
 
     public void clickFunction(WebElement element) {
         waitUntilClickable(element);// eleman clikable olana kadar bekle
-//        scrollToElement(element); // eleman kadar scroll yap
+        scrollToElement(element); // eleman kadar scroll yap
         element.click();// click yap
     }
 
@@ -69,9 +69,9 @@ public class _Parent {
     }
 
     public void verifyElementContainsText(WebElement element, String text) {
-        // waitUntilVisible(element);
-        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
-        //   System.out.println(element.getText());
+         waitUntilVisible(element);
+       // wait.until(ExpectedConditions.textToBePresentInElement(element,text));
+           System.out.println(element.getText());
         Assert.assertTrue(element.getText().toLowerCase().contains(text.toLowerCase()));
     }
 

@@ -22,8 +22,8 @@ public class TestRunnerExtendReport extends AbstractTestNGCucumberTests {
         @AfterClass
         public static void afterClass(){
                 Reporter.loadXMLConfig("src/test/java/XMLFiles/ReportSetting.xml");
-                Reporter.setSystemInfo("User Name", "Grup+2");
-                Reporter.setSystemInfo("Aplication Name", "Basqar");
+                Reporter.setSystemInfo("User Name", "Grup_2");
+                Reporter.setSystemInfo("Aplication Name", "automationpractice.com");
                 Reporter.setSystemInfo("Operation System Info", System.getProperty("os.name"));
                 Reporter.setSystemInfo("Department", "QA");
                 Reporter.setTestRunnerOutput("Test execution Cucumber report");

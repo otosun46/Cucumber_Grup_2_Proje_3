@@ -93,18 +93,18 @@ public class AutolationTestLoginSteps {
             System.out.println(elementsTo.get(i));
             dialogContent.findElementAndClickFunction(elementsTo.get(i++));
             dialogContent.beklet(1000);
-            Set<String> sayfaidleri=driver.getWindowHandles();
+            Set<String> sayfaidleri = driver.getWindowHandles();
             //Sonrasında açılan pencerenin URL'indeki "facebook" kelimesini doğrulayınız
-            String anasayfaidsi=driver.getWindowHandle();
-            for (String s:sayfaidleri) {
+            String anasayfaidsi = driver.getWindowHandle();
+            for (String s : sayfaidleri) {
                 if (!s.equals(anasayfaidsi))
                     driver.switchTo().window(s);
             }
-            String acilansayfaidsi=driver.getCurrentUrl();
-            System.out.println("acilansayfaidsi= "+acilansayfaidsi);
+            String acilansayfaidsi = driver.getCurrentUrl();
+            System.out.println("acilansayfaidsi= " + acilansayfaidsi);
             Assert.assertTrue(acilansayfaidsi.toLowerCase().contains(elementsTo.get(i).toLowerCase()));
             driver.switchTo().window(anasayfaidsi);
-            acilansayfaidsi=driver.getCurrentUrl();
+            acilansayfaidsi = driver.getCurrentUrl();
             System.out.println(acilansayfaidsi);
 
 
@@ -112,8 +112,32 @@ public class AutolationTestLoginSteps {
 
     }
 
-    @When("^Verify page entered$")
-    public void verifyPageEntered() {
+
+
+    @Given("^Navigate to Dresses$")
+    public void navigateToDresses() {
+        dialogContent.findElementAndClickFunction("dresses");
+    }
+
+    @And("^Add an item to the cart$")
+    public void addAnItemToTheCart() {
+        dialogContent.findElementAndClickFunction("printedDressAddToCart");
+        dialogContent.findElementAndClickFunction("addToCart");
+        dialogContent.findElementAndVerifyContainsText("successProductAdd","your cart");
+    }
+
+    @When("^Empty the items in the cart$")
+    public void emptyTheItemsInTheCart() {
+        dialogContent.findElementAndClickFunction("proceedToCheckout");
+        dialogContent.findElementAndClickFunction("deleteIcon");
+
+
+    }
+
+    @And("^Verify cart is empty$")
+    public void verifyCartIsEmpty() {
+
+        dialogContent.findElementAndVerifyContainsText("cart","empty");
 
     }
 }
