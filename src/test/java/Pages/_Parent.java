@@ -115,4 +115,16 @@ public class _Parent {
     public WebElement selectOptions(List<WebElement> elementList, int index) {
         return elementList.get(index);
     }
+
+    public void verifyMyElementIsDisplayed(WebElement element){
+        System.out.println("Metoda girdi");
+      //  waitUntilVisible(element);
+       // System.out.println(element);
+      //  String acilansayfaidsi=driver.getCurrentUrl();
+      //  System.out.println(acilansayfaidsi);
+       // Assert.assertTrue(element.isDisplayed(),"WebElement bulunamadi.");
+
+
+
+    }
 }

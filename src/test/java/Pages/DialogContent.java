@@ -66,6 +66,28 @@ public class DialogContent extends _Parent {
     @FindBy(id = "message")
     private WebElement mesageArea;
 
+    @FindBy(xpath = "//li[@class='facebook']")
+    private WebElement facebook;
+
+    @FindBy(xpath = "//li[@class='twitter']")
+    private WebElement twitter;
+
+    @FindBy(xpath = "//li[@class='youtube']")
+    private WebElement youTube;
+
+    @FindBy(xpath = "//li[@class='google-plus']")
+    private WebElement googlePlus;
+
+    @FindBy(xpath = "//span[text()='Selenium Framework']")
+    private WebElement facebooklogosu;
+    @FindBy(xpath = "//a[@aria-label='Twitter']")
+    private WebElement twitterlogosu;
+    @FindBy(css= "div[id=logo-icon-container]")
+    private WebElement youTubelogosu;
+    @FindBy(css = "div[class=tZshNe]")
+    private WebElement googlePlusLogosu;
+
+
     @FindAll({
             @FindBy(css = "td[class=bold]>[for]")
     })
@@ -136,6 +158,18 @@ public class DialogContent extends _Parent {
             case "orders":
                 myElement = orders;
                 break;
+            case "facebook":
+                myElement = facebook;
+                break;
+            case "twitter":
+                myElement = twitter;
+                break;
+            case "youTube":
+                myElement = youTube;
+                break;
+            case "googlePlus":
+                myElement = googlePlus;
+                break;
 
 
         }
@@ -170,7 +204,23 @@ public class DialogContent extends _Parent {
         }
         sendKeysFunction(myElement, value);
     }
-
+    public void findElementAndVerifyDisplayed(String elementName) {
+        switch (elementName) {
+            case "facebooklogosu":
+                myElement = facebooklogosu;
+                break;
+            case "twitterlogosu":
+                myElement = twitterlogosu;
+                break;
+            case "youTubelogosu":
+                myElement = youTubelogosu;
+                break;
+            case "googlePlusLogosu":
+                myElement = googlePlusLogosu;
+                break;
+        }
+        verifyMyElementIsDisplayed(myElement);
+    }
     public void findElementAndVerifyContainsText(String elementName, String msg) {
         switch (elementName) {
             case "mesageAlert":

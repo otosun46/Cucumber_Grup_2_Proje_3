@@ -2,12 +2,16 @@ package StepDefinitions;
 
 import Pages.DialogContent;
 import Utilities.Driver;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -78,5 +82,38 @@ public class AutolationTestLoginSteps {
         dialogContent.findElementAndSelectMenu("orderReference", arg1);
         if (!arg1.equals("0"))
             dialogContent.findElementAndSelectMenu("pruduct", arg2);
+    }
+
+    @Given("^Click on the element in the Dialog Content class$")
+    public void clickOnTheElementInTheDialogContentClass(DataTable elements) {
+        List<String> elementsTo = elements.asList(String.class);
+
+        for (int i = 0; i < elementsTo.size(); i++) {
+
+            System.out.println(elementsTo.get(i));
+            dialogContent.findElementAndClickFunction(elementsTo.get(i++));
+            dialogContent.beklet(1000);
+            Set<String> sayfaidleri=driver.getWindowHandles();
+            //Sonrasında açılan pencerenin URL'indeki "facebook" kelimesini doğrulayınız
+            String anasayfaidsi=driver.getWindowHandle();
+            for (String s:sayfaidleri) {
+                if (!s.equals(anasayfaidsi))
+                    driver.switchTo().window(s);
+            }
+            String acilansayfaidsi=driver.getCurrentUrl();
+            System.out.println("acilansayfaidsi= "+acilansayfaidsi);
+            Assert.assertTrue(acilansayfaidsi.toLowerCase().contains(elementsTo.get(i).toLowerCase()));
+            driver.switchTo().window(anasayfaidsi);
+            acilansayfaidsi=driver.getCurrentUrl();
+            System.out.println(acilansayfaidsi);
+
+
+        }
+
+    }
+
+    @When("^Verify page entered$")
+    public void verifyPageEntered() {
+
     }
 }
