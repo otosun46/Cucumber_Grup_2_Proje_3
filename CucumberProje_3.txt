@@ -12,3 +12,12 @@
 4) Facebook, twitter, youtube, google sayfalarına gittiğinizi doğrulayın
 
 Tüm feature dosyaları için runner oluşturun, bir extend rapor oluşturun.
+
+       2.Bolum – isteyenler için devam….
+login den sonra dresses e tiklayınız.
+herhangi bi dress e tiklayin
+add to wishlist button una tiklayin
+wish list sayfasina gidin
+eklediginiz dress wishlist sayfasinda gozukmesi lazim
+tum wishlistteki dress leri cikartin
+wishlist te herhangi bir dress olmamasi lazim

@@ -27,7 +27,9 @@ public class _Parent {
 
     WebDriver driver;
     WebDriverWait wait;
-    List<WebElement> myList = new ArrayList<>();
+
+
+    List<WebElement> myElementList;
     WebElement myElement;
 
     public _Parent() {

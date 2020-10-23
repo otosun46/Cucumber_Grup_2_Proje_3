@@ -8,13 +8,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DialogContent extends _Parent {
-    WebElement myElement;
-    List<WebElement> myElementList;
+
 
     public DialogContent() {
         PageFactory.initElements(driver, this);
@@ -141,14 +142,18 @@ public class DialogContent extends _Parent {
         clickFunction(myElement);
     }
 
-    public void findElementAndClickFunction(String elementList, int index) {
-        myElementList = new ArrayList<>();
-        switch (elementList) {
-            case "orderReferens":
-                myElementList = orderReferens;
+    public void findElementAndSelectOption(String listName, String secenek) {
+        switch (listName) {
+            case "option":
+             //   myElementList = option;
                 break;
+            case "tabOption":
+             //   myElementList = tabOption;
+                break;
+
         }
-        clickFunction(myElementList, index);
+        beklet(200);
+        selectOptionByString(myElementList, secenek);
     }
 
     public void findElementAndSendKeysFunction(String element, String value) {
@@ -196,6 +201,12 @@ public class DialogContent extends _Parent {
         selectMenu(myElement, index);
     }
 
+    public void selectMenu(WebElement menuName,String index){
+//        System.out.println("Select menuye girdi");
+        Select menuSecim = new Select(menuName);
+        menuSecim.selectByIndex(Integer.parseInt(index));
+    }
+
     public void findElementListAndNumberOfLstOrPrintItemsOfList(String elementName, int numberOfItems) {
         myElementList = new ArrayList<>();
         switch (elementName) {
@@ -236,6 +247,17 @@ public class DialogContent extends _Parent {
                 break;
         }
         return myElementList;
+    }
+    public void verifyTheNumberOfItemsOnTheList(List<WebElement> elementList,int numberOfItems){
+        System.out.println("Number of items= "+elementList.size());
+        Assert.assertTrue(elementList.size()==numberOfItems);
+    }
+
+    public  void printToList(List<WebElement> webElmList) {
+        for (WebElement e : webElmList) {
+            System.out.println(e.getText());
+            System.out.println("------------------------------------------------------------");
+        }
     }
 
     public void findWebElementListAndClickEachOneElementWithForeachAndPrintOfList(String clickElementList, String printElementList) {
