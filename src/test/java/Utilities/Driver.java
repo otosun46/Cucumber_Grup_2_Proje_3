@@ -49,7 +49,7 @@ public class Driver {
                 default:
                     WebDriverManager.chromedriver().setup();
                     threadDriver.set(new ChromeDriver());
-                    System.out.println("Chrome driver atandi");
+//                    System.out.println("Chrome driver atandi");
             }
         }
         return threadDriver.get();

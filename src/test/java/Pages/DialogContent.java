@@ -82,28 +82,32 @@ public class DialogContent extends _Parent {
     private WebElement facebooklogosu;
     @FindBy(xpath = "//a[@aria-label='Twitter']")
     private WebElement twitterlogosu;
-    @FindBy(css= "div[id=logo-icon-container]")
+    @FindBy(css = "div[id=logo-icon-container]")
     private WebElement youTubelogosu;
-    @FindBy(css = "div[class=tZshNe]")
+    @FindBy(xpath = "//div[@id='headingSubtext']/span")
     private WebElement googlePlusLogosu;
 
     @FindBy(xpath = "(//a[@title='Dresses'])[2]")
     private WebElement dresses;
-        //(//ul[@class='product_list grid row']/li)[2]
-   // @FindBy(xpath = "(//span[text()='Add to cart'])[2]")
-  // @FindBy(css="ul[class='product_list grid row']>li")
-        @FindBy(xpath = "(//a[@class='product-name'])[4]")
+    //(//ul[@class='product_list grid row']/li)[2]
+    // @FindBy(xpath = "(//span[text()='Add to cart'])[2]")
+    // @FindBy(css="ul[class='product_list grid row']>li")
+    @FindBy(xpath = "(//a[@class='product-name'])[4]")
     private WebElement printedDressAddToCart;
 
-   // @FindBy(xpath = "//i[@class='icon-ok']")
-    @FindBy(xpath = "//span[@class='ajax_cart_product_txt ']")
+
+    @FindBy(xpath = "//div[@class='layer_cart_product col-xs-12 col-md-6']/h2")
     private WebElement successProductAdd;
 
+    //button/span[text()='Add to cart']
     @FindBy(xpath = "//span[text()='Add to cart']")
     private WebElement addToCart;
 
     @FindBy(xpath = "//a[@title='Proceed to checkout']")
     private WebElement proceedToCheckout;
+
+    @FindBy(xpath = "//span[@title='Continue shopping']")
+    private WebElement continueShopping;
 
     @FindBy(xpath = "//i[@class='icon-trash']")
     private WebElement deleteIcon;
@@ -111,7 +115,10 @@ public class DialogContent extends _Parent {
     @FindBy(xpath = "//p[@class='alert alert-warning']")//bunun textinin empty oldugunu dogrulayacagiz
     private WebElement cart;
 
-
+    @FindAll({
+            @FindBy(xpath = "//i[@class='icon-trash']")
+    })
+    private List<WebElement> deleteIconLst;
 
     @FindAll({
             @FindBy(css = "td[class=bold]>[for]")
@@ -128,19 +135,19 @@ public class DialogContent extends _Parent {
     private List<WebElement> orderProductName;
 
 
-
     @FindAll({
             @FindBy(css = "ul[class='block_content products-block']>li")//(css="h5[itemprop=name]>[itemprop=url]")
     })
     private List<WebElement> products;
 
     @FindAll({
-            @FindBy(css="h5[itemprop=name]")
+            @FindBy(css = "h5[itemprop=name]")
     })
     private List<WebElement> denemeList;
 
     @FindAll({
-            @FindBy(css="ul[class='product_list grid row']>li")
+            @FindBy(css = "ul[class='product_list grid row']>li")
+            // @FindBy(css="//a[@class='product-name']")
     })
     private List<WebElement> productList;
 
@@ -210,6 +217,9 @@ public class DialogContent extends _Parent {
             case "addToCart":
                 myElement = addToCart;
                 break;
+            case "continueShopping":
+                myElement = continueShopping;
+                break;
 
 
         }
@@ -218,16 +228,20 @@ public class DialogContent extends _Parent {
 
     public void findElementAndSelectOption(String listName, String secenek) {
         switch (listName) {
-            case "option":
-             //   myElementList = option;
+            case "products":
+                myElementList = products;
                 break;
-            case "tabOption":
-             //   myElementList = tabOption;
+            case "productList":
+                myElementList = productList;
                 break;
-
         }
-        beklet(200);
-        selectOptionByString(myElementList, secenek);
+        printToList(myElementList);
+        myElement = selectOptionByString(myElementList, secenek);
+        clickFunction(myElement);
+        if (!addToCart.isDisplayed()) {
+            clickFunction(myElement);
+        }
+
     }
 
     public void findElementAndSendKeysFunction(String element, String value) {
@@ -244,6 +258,7 @@ public class DialogContent extends _Parent {
         }
         sendKeysFunction(myElement, value);
     }
+
     public void findElementAndVerifyDisplayed(String elementName) {
         switch (elementName) {
             case "facebooklogosu":
@@ -261,6 +276,7 @@ public class DialogContent extends _Parent {
         }
         verifyMyElementIsDisplayed(myElement);
     }
+
     public void findElementAndVerifyContainsText(String elementName, String msg) {
         switch (elementName) {
             case "mesageAlert":
@@ -292,13 +308,22 @@ public class DialogContent extends _Parent {
             case "pruduct":
                 myElement = pruduct;
                 break;
-
-
         }
         selectMenu(myElement, index);
     }
 
-    public void selectMenu(WebElement menuName,String index){
+    public void findElementListAndClickToAllElement(String listName) {
+        switch (listName) {
+            case "deleteIconLst":
+                myElementList = deleteIconLst;
+                break;
+        }
+        for (WebElement element:myElementList) {
+            clickFunction(element);
+        }
+    }
+
+    public void selectMenu(WebElement menuName, String index) {
 //        System.out.println("Select menuye girdi");
         Select menuSecim = new Select(menuName);
         menuSecim.selectByIndex(Integer.parseInt(index));
@@ -326,7 +351,7 @@ public class DialogContent extends _Parent {
                 myElementList = denemeList;
                 break;
             case "deneme1List":
-               // myElementList = deneme1List;
+                // myElementList = deneme1List;
                 break;
         }
         if (numberOfItems > 0)
@@ -345,12 +370,13 @@ public class DialogContent extends _Parent {
         }
         return myElementList;
     }
-    public void verifyTheNumberOfItemsOnTheList(List<WebElement> elementList,int numberOfItems){
-        System.out.println("Number of items= "+elementList.size());
-        Assert.assertTrue(elementList.size()==numberOfItems);
+
+    public void verifyTheNumberOfItemsOnTheList(List<WebElement> elementList, int numberOfItems) {
+        System.out.println("Number of items= " + elementList.size());
+        Assert.assertTrue(elementList.size() == numberOfItems);
     }
 
-    public  void printToList(List<WebElement> webElmList) {
+    public void printToList(List<WebElement> webElmList) {
         for (WebElement e : webElmList) {
             System.out.println(e.getText());
             System.out.println("------------------------------------------------------------");
@@ -364,7 +390,7 @@ public class DialogContent extends _Parent {
         int list = 1;
         for (WebElement element : findElementList(clickElementList)) {
             clickFunction(element);
-            beklet(2000);
+            //  beklet(2000);
             System.out.println("List:" + list++);
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             findElementListAndNumberOfLstOrPrintItemsOfList(printElementList, 0);
@@ -372,4 +398,6 @@ public class DialogContent extends _Parent {
         System.out.println("List printing finished");
         System.out.println("************************************************************");
     }
+
+
 }

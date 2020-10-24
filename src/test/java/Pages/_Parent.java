@@ -15,6 +15,7 @@ import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class _Parent {
     /**
@@ -34,13 +35,13 @@ public class _Parent {
 
     public _Parent() {
         driver = Driver.getDriver();
-        wait = new WebDriverWait(driver, 5);
+        wait = new WebDriverWait(driver, 10);
         PageFactory.initElements(driver, this);
     }
 
     public void clickFunction(WebElement element) {
-        waitUntilClickable(element);// eleman clikable olana kadar bekle
         scrollToElement(element); // eleman kadar scroll yap
+        waitUntilClickable(element);// eleman clikable olana kadar bekle
         element.click();// click yap
     }
 
@@ -69,9 +70,9 @@ public class _Parent {
     }
 
     public void verifyElementContainsText(WebElement element, String text) {
-         waitUntilVisible(element);
-       // wait.until(ExpectedConditions.textToBePresentInElement(element,text));
-           System.out.println(element.getText());
+        waitUntilVisible(element);
+        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+        System.out.println(element.getText());
         Assert.assertTrue(element.getText().toLowerCase().contains(text.toLowerCase()));
     }
 
@@ -92,13 +93,17 @@ public class _Parent {
         return str.matches("-?\\d+(\\.\\d+)?");
     }
 
-    public void selectOptionByString(List<WebElement> elementList, String str) {
+    public WebElement selectOptionByString(List<WebElement> elementList, String str) {
+        WebElement element=null;
         str = str.trim();
         if (girdiSayiMi(str)) {
-            clickFunction(selectOptions(elementList, Integer.parseInt(str)));
+            element=selectOptions(elementList, Integer.parseInt(str));
+          //  clickFunction(element);
         } else {
-            clickFunction(selectOptions(elementList, str));
+            element=selectOptions(elementList, str);
+          //  clickFunction(element);
         }
+        return element;
     }
 
     public WebElement selectOptions(List<WebElement> elementList, String value) {
@@ -116,15 +121,14 @@ public class _Parent {
         return elementList.get(index);
     }
 
-    public void verifyMyElementIsDisplayed(WebElement element){
-        System.out.println("Metoda girdi");
-      //  waitUntilVisible(element);
-       // System.out.println(element);
-      //  String acilansayfaidsi=driver.getCurrentUrl();
-      //  System.out.println(acilansayfaidsi);
-       // Assert.assertTrue(element.isDisplayed(),"WebElement bulunamadi.");
-
-
-
+    public void verifyMyElementIsDisplayed(WebElement element) {
+        Set<String> sayfaidleri = driver.getWindowHandles();
+        String anasayfaidsi = driver.getWindowHandle();
+        for (String s : sayfaidleri) {
+            if (!s.equals(anasayfaidsi))
+                driver.switchTo().window(s);
+        }
+        Assert.assertTrue(element.isDisplayed(),"WebElement bulunamadi.");
+        driver.switchTo().window(anasayfaidsi);
     }
 }
