@@ -8,18 +8,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DialogContent extends _Parent {
 
-
-    public DialogContent() {
-        PageFactory.initElements(driver, this);
-    }
+//    public DialogContent() {
+//        PageFactory.initElements(driver, this);
+//    }
 
     @FindBy(xpath = "//a[@class='login']")
     private WebElement sigIn;
@@ -80,26 +76,25 @@ public class DialogContent extends _Parent {
 
     @FindBy(xpath = "//span[text()='Selenium Framework']")
     private WebElement facebooklogosu;
+
     @FindBy(xpath = "//a[@aria-label='Twitter']")
     private WebElement twitterlogosu;
+
     @FindBy(css = "div[id=logo-icon-container]")
     private WebElement youTubelogosu;
+
     @FindBy(xpath = "//div[@id='headingSubtext']/span")
     private WebElement googlePlusLogosu;
 
     @FindBy(xpath = "(//a[@title='Dresses'])[2]")
     private WebElement dresses;
-    //(//ul[@class='product_list grid row']/li)[2]
-    // @FindBy(xpath = "(//span[text()='Add to cart'])[2]")
-    // @FindBy(css="ul[class='product_list grid row']>li")
+
     @FindBy(xpath = "(//a[@class='product-name'])[4]")
     private WebElement printedDressAddToCart;
-
 
     @FindBy(xpath = "//div[@class='layer_cart_product col-xs-12 col-md-6']/h2")
     private WebElement successProductAdd;
 
-    //button/span[text()='Add to cart']
     @FindBy(xpath = "//span[text()='Add to cart']")
     private WebElement addToCart;
 
@@ -125,7 +120,6 @@ public class DialogContent extends _Parent {
     })
     private List<WebElement> productNameList;
 
-
     @FindBy(xpath = "//p[@class='alert alert-success']")
     private WebElement successMessage;
 
@@ -134,9 +128,8 @@ public class DialogContent extends _Parent {
     })
     private List<WebElement> orderProductName;
 
-
     @FindAll({
-            @FindBy(css = "ul[class='block_content products-block']>li")//(css="h5[itemprop=name]>[itemprop=url]")
+            @FindBy(css = "ul[class='block_content products-block']>li")
     })
     private List<WebElement> products;
 
@@ -147,7 +140,6 @@ public class DialogContent extends _Parent {
 
     @FindAll({
             @FindBy(css = "ul[class='product_list grid row']>li")
-            // @FindBy(css="//a[@class='product-name']")
     })
     private List<WebElement> productList;
 
@@ -161,29 +153,29 @@ public class DialogContent extends _Parent {
     })
     private List<WebElement> orderReferens;
 
-    //span[class='discount']
-
-    public void findElementAndClickFunction(String element) {
-        switch (element) {
+    /**
+     * Parametre olarak ismi girilen WebElementi bulur ve dondurur.
+     *
+     * @param webElementName
+     * @return
+     */
+    public WebElement findWebElement(String webElementName) {
+        switch (webElementName) {
             case "sigIn":
                 myElement = sigIn;
                 break;
-
             case "loginButton":
                 myElement = loginButton;
                 break;
             case "specials":
                 myElement = specials;
                 break;
-
             case "sendMesageButton":
                 myElement = sendMesageButton;
                 break;
-
             case "bestSeller":
                 myElement = bestSeller;
                 break;
-
             case "contactUs":
                 myElement = contactUs;
                 break;
@@ -220,32 +212,6 @@ public class DialogContent extends _Parent {
             case "continueShopping":
                 myElement = continueShopping;
                 break;
-
-
-        }
-        clickFunction(myElement);
-    }
-
-    public void findElementAndSelectOption(String listName, String secenek) {
-        switch (listName) {
-            case "products":
-                myElementList = products;
-                break;
-            case "productList":
-                myElementList = productList;
-                break;
-        }
-        printToList(myElementList);
-        myElement = selectOptionByString(myElementList, secenek);
-        clickFunction(myElement);
-        if (!addToCart.isDisplayed()) {
-            clickFunction(myElement);
-        }
-
-    }
-
-    public void findElementAndSendKeysFunction(String element, String value) {
-        switch (element) {
             case "email":
                 myElement = email;
                 break;
@@ -255,12 +221,6 @@ public class DialogContent extends _Parent {
             case "mesageArea":
                 myElement = mesageArea;
                 break;
-        }
-        sendKeysFunction(myElement, value);
-    }
-
-    public void findElementAndVerifyDisplayed(String elementName) {
-        switch (elementName) {
             case "facebooklogosu":
                 myElement = facebooklogosu;
                 break;
@@ -273,16 +233,9 @@ public class DialogContent extends _Parent {
             case "googlePlusLogosu":
                 myElement = googlePlusLogosu;
                 break;
-        }
-        verifyMyElementIsDisplayed(myElement);
-    }
-
-    public void findElementAndVerifyContainsText(String elementName, String msg) {
-        switch (elementName) {
             case "mesageAlert":
                 myElement = mesageAlert;
                 break;
-
             case "successMessage":
                 myElement = successMessage;
                 break;
@@ -293,47 +246,25 @@ public class DialogContent extends _Parent {
                 myElement = cart;
                 break;
         }
-        verifyElementContainsText(myElement, msg);
+        return myElement;
     }
 
-    public void findElementAndSelectMenu(String elementName, String index) {
-        switch (elementName) {
-            case "mesageHeading":
-                myElement = mesageHeading;
-                break;
-
-            case "orderReference":
-                myElement = orderReference;
-                break;
-            case "pruduct":
-                myElement = pruduct;
-                break;
-        }
-        selectMenu(myElement, index);
-    }
-
-    public void findElementListAndClickToAllElement(String listName) {
-        switch (listName) {
-            case "deleteIconLst":
-                myElementList = deleteIconLst;
-                break;
-        }
-        for (WebElement element:myElementList) {
-            clickFunction(element);
-        }
-    }
-
-    public void selectMenu(WebElement menuName, String index) {
-//        System.out.println("Select menuye girdi");
-        Select menuSecim = new Select(menuName);
-        menuSecim.selectByIndex(Integer.parseInt(index));
-    }
-
-    public void findElementListAndNumberOfLstOrPrintItemsOfList(String elementName, int numberOfItems) {
-        myElementList = new ArrayList<>();
-        switch (elementName) {
+    /**
+     * Parametre olarak ismi girilen WebElementListi dondurur.
+     *
+     * @param webElementListName
+     * @return
+     */
+    public List<WebElement> findWebElementList(String webElementListName) {
+        switch (webElementListName) {
             case "products":
                 myElementList = products;
+                break;
+            case "productList":
+                myElementList = productList;
+                break;
+            case "deleteIconLst":
+                myElementList = deleteIconLst;
                 break;
             case "productsOfSale":
                 myElementList = productsOfSale;
@@ -350,45 +281,93 @@ public class DialogContent extends _Parent {
             case "denemeList":
                 myElementList = denemeList;
                 break;
-            case "deneme1List":
-                // myElementList = deneme1List;
-                break;
-        }
-        if (numberOfItems > 0)
-            verifyTheNumberOfItemsOnTheList(waitVisibleListAllElement(myElementList), numberOfItems);
-        else
-            printToList(myElementList);
-
-    }
-
-    public List<WebElement> findElementList(String elementList) {
-        myElementList = new ArrayList<>();
-        switch (elementList) {
-            case "orderReferens":
-                myElementList = orderReferens;
-                break;
         }
         return myElementList;
     }
 
-    public void verifyTheNumberOfItemsOnTheList(List<WebElement> elementList, int numberOfItems) {
-        System.out.println("Number of items= " + elementList.size());
-        Assert.assertTrue(elementList.size() == numberOfItems);
+    /**
+     * Bu metod steps classtan calistirilacak parametre olarak string olarak tiklanacak WebElementin ismini alir.
+     *
+     * @param element
+     */
+    public void findElementAndClickFunction(String element) {
+        clickFunction(findWebElement(element));
     }
 
-    public void printToList(List<WebElement> webElmList) {
-        for (WebElement e : webElmList) {
-            System.out.println(e.getText());
-            System.out.println("------------------------------------------------------------");
+    /**
+     * Parametre olarak ismi gonderilen WebElementi bulur ve value parametresini secilen WebElemente gonderir.
+     *
+     * @param element
+     * @param value
+     */
+    public void findElementAndSendKeysFunction(String element, String value) {
+        sendKeysFunction(findWebElement(element), value);
+    }
+
+    /**
+     * Bu metod steps classindan cagrilir.
+     * Parametre olarak seceneklerin oldugu WebElementListesinin adini ve secim kriterini string olarak alir.
+     * Secim parametresi sayi olursa index olarak degerlendirilir ve o indexli WebElement secilir.
+     * Parametre sayi degilse WebElementin texti ile karsilastirilir ve kapsayan WebElement secilir.
+     * @param listName
+     * @param secenek
+     */
+    public void findElementAndSelectOption(String listName, String secenek) {
+        findWebElementList(listName);
+        printToList(myElementList);
+        myElement = selectOptionByString(myElementList, secenek);
+        clickFunction(myElement);       // bazi elemanlara bir kere tiklayinca secilmedigi tespit edildi cozum olarak;
+        if (!addToCart.isDisplayed()) { //sonraki tiklanacak eleman addToCart eger bu eleman gorunmuyorsa
+            clickFunction(myElement);   //myElemente bir kere daha tiklayacak
         }
     }
 
-    public void findWebElementListAndClickEachOneElementWithForeachAndPrintOfList(String clickElementList, String printElementList) {
+    /**
+     * Parametre olarak ismi gonderilen WebElementi bulur ve gorundugunu dogrular.
+     * @param elementName
+     */
+    public void findElementAndVerifyDisplayed(String elementName) {
+        verifyMyElementIsDisplayed(findWebElement(elementName));
+    }
 
+    /**
+     * Parametre olarak ismi gonderilen WebElementi bulur ve
+     * parametre olarak giriilen msg nin WebElementin textinde bulundugunu dogrular.
+     * @param elementName
+     * @param msg
+     */
+    public void findElementAndVerifyContainsText(String elementName, String msg) {
+        verifyElementContainsText(findWebElement(elementName), msg);
+    }
+
+    /**
+     * Parametre olarak ismi girilen WebElementListin butun elemanlarina clickFunctioni uygular.
+     * @param listName
+     */
+    public void findElementListAndClickToAllElement(String listName) {
+        for (WebElement element : findWebElementList(listName)) {
+            clickFunction(element);
+        }
+    }
+
+    /**
+     * Parametre olarak ismi girilen WebElementListin ikinci parametrede girilen sayi kadar elemana sahip oldugu dogrulanir.
+     * Ikinci parametre "0" girilirse listedeki elemenlari yazdirir.
+     * @param elementName
+     * @param numberOfItems
+     */
+    public void findElementListAndNumberOfLstOrPrintItemsOfList(String elementName, int numberOfItems) {
+        if (numberOfItems > 0)
+            verifyTheNumberOfItemsOnTheList(waitVisibleListAllElement(findWebElementList(elementName)), numberOfItems);
+        else
+            printToList(findWebElementList(elementName));
+    }
+
+    public void findWebElementListAndClickEachOneElementWithForeachAndPrintOfList(String clickElementList, String printElementList) {
         System.out.println("************************************************************");
         System.out.println("List printing started");
         int list = 1;
-        for (WebElement element : findElementList(clickElementList)) {
+        for (WebElement element : findWebElementList(clickElementList)) {
             clickFunction(element);
             //  beklet(2000);
             System.out.println("List:" + list++);
@@ -398,6 +377,4 @@ public class DialogContent extends _Parent {
         System.out.println("List printing finished");
         System.out.println("************************************************************");
     }
-
-
 }

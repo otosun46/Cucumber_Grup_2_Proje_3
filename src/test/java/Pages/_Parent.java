@@ -131,4 +131,17 @@ public class _Parent {
         Assert.assertTrue(element.isDisplayed(),"WebElement bulunamadi.");
         driver.switchTo().window(anasayfaidsi);
     }
+
+    public void verifyTheNumberOfItemsOnTheList(List<WebElement> elementList, int numberOfItems) {
+        System.out.println("Number of items= " + elementList.size());
+        Assert.assertTrue(elementList.size() == numberOfItems);
+    }
+
+    public void printToList(List<WebElement> webElmList) {
+        for (WebElement e : webElmList) {
+            System.out.println(e.getText());
+            System.out.println("------------------------------------------------------------");
+        }
+    }
+
 }
